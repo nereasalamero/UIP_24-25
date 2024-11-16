@@ -9,13 +9,10 @@ class Message():
         self.text = text
         self.passkey = passkey
         self.encrypted_text = encrypt(self.text, self.passkey)
+        self.decrypted_text = decrypt(self.encrypted_text, self.passkey)
 
 def main(page: ft.Page):
     page.title = "Flet Chat"
-    messages = ft.Column()
-    user = ft.TextField(label="Username", width=150)
-    message = ft.TextField(label="Message", expand=True, on_submit=lambda e: send_click)
-    passkey = ft.TextField(label="Passkey", width=150, password=True)
     
     publish_to = ft.Dropdown(
         label="Publish to",
@@ -24,7 +21,7 @@ def main(page: ft.Page):
             ft.dropdown.Option("Group 2"),
             ft.dropdown.Option("Group 3")
         ],
-        width=200
+        width=200,
     )
     subscribe_to = ft.Dropdown(
         label="Subscribe to",
@@ -34,11 +31,11 @@ def main(page: ft.Page):
             ft.dropdown.Option("Group 3")
         ],
         width=200,
-        #on_change=lambda e: subscribe_topic(e)
+        # on_change=lambda e: subscribe_topic
     )
     
     # subscribe to broadcast messages
-    def on_message(msg: Message, e):
+    def on_message(topic, msg: Message, e):
         print(f"Messages: {messages.controls}")
         decrypted = decrypt(msg.encrypted_text, passkey.value)
         messages.controls.append(ft.Text(f"{msg.user}: {decrypted}"))
@@ -47,24 +44,30 @@ def main(page: ft.Page):
 
     def subscribe_topic(e):
         topic = subscribe_to.value
-        # page.pubsub.subscribe_topic(topic, on_message)
+        page.pubsub.subscribe_topic(topic, on_message)
         print(f"Subscribed to {topic}")
         print(f"Messages: {messages.controls}")
         page.update()
-
-    page.pubsub.subscribe(on_message)
+    
+    topic = subscribe_to.value
+    page.pubsub.subscribe_topic(topic, on_message)
+    #page.pubsub.subscribe(on_message)
 
     def send_click(e):
         new_msg = Message(user.value, message.value, passkey.value)
         publish = publish_to.value
-        #page.pubsub.send_all_on_topic(publish, new_msg)
+        page.pubsub.send_all_on_topic(publish, new_msg)
         print(f"Sent message to {publish}")
         print(f"Message: {new_msg.text}")
-        page.pubsub.send_all(new_msg)
+        #page.pubsub.send_all(new_msg)
         # clean up the form
         message.value = ""
         page.update()
     
+    messages = ft.Column()
+    user = ft.TextField(label="Username", width=150)
+    message = ft.TextField(label="Message", expand=True, on_submit=send_click)
+    passkey = ft.TextField(label="Passkey", width=150, password=True)
     send = ft.ElevatedButton("Send", on_click=send_click)
     #subscribe = ft.ElevatedButton("Subscribe", on_click=subscribe_topic)
     page.add(
@@ -80,4 +83,4 @@ def main(page: ft.Page):
     )
     page.update()
 
-ft.app(main, view=ft.AppView.WEB_BROWSER)
+ft.app(target=main)
