@@ -52,3 +52,21 @@ Create a Flet app to add daily expenses in 4 different categories and display ea
 - Refer to PieChart control.
 - Refer to DataTable control.
 - Create a short form with autocomplete, textfield, and submit button.
+
+## One day group project - Group 1
+**Authors:** `Etling, Niklas` `Goasduf, Katia` `Marchenko, Arsenii` `Noyrez, Thibault` `Salamero Labara, Nerea`
+**Date:** `November 22nd, 2024` <br>
+**Summary:** Code of the One-Day Project, part of User Interface Programming subject.
+
+The topic we had to develop was a Movie/TV show search, more specifically an interface to search movies or TV shows with details like ratings, genres, and descriptions fetched from an API.
+
+We have developed this application using the Flet framework and integrating it with the TMDB (The Movie DataBase) API. Users can search for movies and TV shows, filtering them by types and they can visualize the details of the films, such as its ratings, genres and descriptions.
+
+## Group project: Food App
+**Authors:** `Etling, Niklas` `Goasduf, Katia` `Marchenko, Arsenii` `Noyrez, Thibault` `Salamero Labara, Nerea`
+**Date:** `November 22nd, 2024` <br>
+**Summary:** Group project for User Interface Programming.
+
+The goal of this project is to code a food delivery application for placing orders using Flet. In order to do this we've designed the UI design using the tool Figma. Once that was finished, we distributed all the tasks that needed to be done among the group members and we started working on it.
+
+Thanks to the use of GitHub platform we have been able to maintain version control that has allowed us to return to a previous version of the code if necessary. We have also used GitHub Issues, which is a very useful tool when assigning tasks and having control of what remains to be done at all times.
